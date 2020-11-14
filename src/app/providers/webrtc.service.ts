@@ -47,7 +47,24 @@ export class WebrtcService {
   }
 
   async createPeer(userId: string) {
-    this.peer = new Peer(userId);
+    this.peer = new Peer(userId, {
+      config: {
+        iceServers: [
+          {
+            urls: [
+              'stun:stun1.l.google.com:19302'
+            ],
+          },
+          {
+            urls: [
+              'turn:95.211.241.165:3478'
+            ],
+            username: 'test',
+            credential: 'test'
+          }
+        ],
+      }
+    });
     this.peer.on('open', () => {
       this.wait();
     });
